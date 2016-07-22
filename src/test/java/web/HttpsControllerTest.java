@@ -8,16 +8,16 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import context.SpringRootConfig;
 import utils.HttpClientUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/spring-context.xml",
-        "classpath:spring/spring-mvc.xml" })
+@ContextConfiguration(classes = { SpringRootConfig.class })
 public class HttpsControllerTest {
 
     @Test
     public void testRequestByHttp() {
-        String url = "http://127.0.0.1:8080/httpsTest/http/request";
+        String url = "http://127.0.0.1:8080/httpsTestWithAnnotation/http/request";
         String param = "orderNo=123";
         String result = HttpClientUtils.sendRequest("POST", url, "http", param,
                 "utf-8");
@@ -26,7 +26,7 @@ public class HttpsControllerTest {
 
     @Test
     public void testRequestByHttpsWithoutCer() {
-        String url = "https://127.0.0.1:8443/httpsTest/https/request";
+        String url = "https://127.0.0.1:8443/httpsTestWithAnnotation/https/request";
         String param = "12345";
         Map<String, String> data = new HashMap<String, String>();
         data.put("orderNo", param);
@@ -37,7 +37,7 @@ public class HttpsControllerTest {
 
     @Test
     public void testRequestByHttpsWithCer() {
-        String url = "https://127.0.0.1:8443/httpsTest/https/request";
+        String url = "https://127.0.0.1:8443/httpsTestWithAnnotation/https/request";
         String param = "12345";
         Map<String, String> data = new HashMap<String, String>();
         data.put("orderNo", param);
