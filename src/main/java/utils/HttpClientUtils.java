@@ -96,15 +96,15 @@ public class HttpClientUtils {
      * @return
      * @see 需要参考的类或方法
      */
-    public static String sendRequestWithoutCer(String method, String url,
+    public static String sendRequestTrustall(String method, String url,
             String protocol, Map<String, String> requestData, String charset) {
         CloseableHttpClient closeableHttpClient = null;
         HttpPost httpPost = null;
         String result = null;
         try {
 
-            // closeableHttpClient = new SSLClientFactory();
-            closeableHttpClient = SSLClientFactory.getClient();
+            // closeableHttpClient = new SSLClientWithoutCerFactory();
+            closeableHttpClient = SSLClientWithoutCerFactory.getTrustallClient();
             httpPost = new HttpPost(url);
             List<NameValuePair> data = MapToNameValuePair(requestData);
             if (data.size() > 0) {
@@ -144,7 +144,62 @@ public class HttpClientUtils {
         }
         return result;
     }
+    /**
+     * @Description 绕过证书发送https请求
+     * @param url
+     * @param protocol
+     * @param entity
+     * @param charset
+     * @return
+     * @see 需要参考的类或方法
+     */
+    public static String sendRequestTrustself(String method, String url,
+            String protocol, Map<String, String> requestData, String charset) {
+        CloseableHttpClient closeableHttpClient = null;
+        HttpPost httpPost = null;
+        String result = null;
+        try {
 
+            closeableHttpClient = new SSLClientWithoutCerTrustself();
+            httpPost = new HttpPost(url);
+            List<NameValuePair> data = MapToNameValuePair(requestData);
+            if (data.size() > 0) {
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(data,
+                        charset);
+                httpPost.setEntity(entity);
+            }
+
+            HttpResponse response = closeableHttpClient.execute(httpPost);
+            if (response != null) {
+                HttpEntity resEntity = response.getEntity();
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity, charset);
+                } else {
+                    logger.info("HttpEntity resEntity响应信息为空");
+                }
+            } else {
+                logger.info("HttpResponse response 响应信息为空");
+            }
+        } catch (IOException ioe) {
+            logger.error("Method sendRequest execute exception...");
+            ioe.printStackTrace();
+        } catch (Exception e) {
+            logger.error("Method sendRequest execute exception...");
+            e.printStackTrace();
+        }
+
+        finally {
+            try {
+                // 关闭流并释放资源
+                closeableHttpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                logger.error(
+                        "Method sendRequest release resource exception...");
+            }
+        }
+        return result;
+    }
     /**
      * @Description 加载证书发送https请求
      * @param url

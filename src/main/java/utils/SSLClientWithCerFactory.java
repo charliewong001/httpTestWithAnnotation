@@ -32,6 +32,9 @@ public class SSLClientWithCerFactory {
         SSLConnectionSocketFactory factory = new SSLConnectionSocketFactory(
                 sslContext, new String[] { "TLSv1" }, null,
                 SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+        // SSLConnectionSocketFactory factory = new SSLConnectionSocketFactory(
+        // sslContext, new String[] { "TLSv1" }, null,
+        // SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
         CloseableHttpClient closeableHttpClient = HttpClients.custom()
                 .setSSLSocketFactory(factory).build();
         return closeableHttpClient;
