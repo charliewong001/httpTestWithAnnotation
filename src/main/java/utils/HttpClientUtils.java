@@ -77,7 +77,8 @@ public class HttpClientUtils {
         } finally {
             try {
                 // 关闭流并释放资源
-                closeableHttpClient.close();
+                if (closeableHttpClient != null)
+                    closeableHttpClient.close();
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.error(
@@ -104,7 +105,8 @@ public class HttpClientUtils {
         try {
 
             // closeableHttpClient = new SSLClientWithoutCerFactory();
-            closeableHttpClient = SSLClientWithoutCerFactory.getTrustallClient();
+            closeableHttpClient = SSLClientWithoutCerFactory
+                    .getTrustallClient();
             httpPost = new HttpPost(url);
             List<NameValuePair> data = MapToNameValuePair(requestData);
             if (data.size() > 0) {
@@ -135,7 +137,8 @@ public class HttpClientUtils {
         finally {
             try {
                 // 关闭流并释放资源
-                closeableHttpClient.close();
+                if (closeableHttpClient != null)
+                    closeableHttpClient.close();
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.error(
@@ -144,6 +147,7 @@ public class HttpClientUtils {
         }
         return result;
     }
+
     /**
      * @Description 绕过证书发送https请求
      * @param url
@@ -191,7 +195,8 @@ public class HttpClientUtils {
         finally {
             try {
                 // 关闭流并释放资源
-                closeableHttpClient.close();
+                if (closeableHttpClient != null)
+                    closeableHttpClient.close();
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.error(
@@ -200,6 +205,7 @@ public class HttpClientUtils {
         }
         return result;
     }
+
     /**
      * @Description 加载证书发送https请求
      * @param url
@@ -248,7 +254,8 @@ public class HttpClientUtils {
         finally {
             try {
                 // 关闭流并释放资源
-                closeableHttpClient.close();
+                if (closeableHttpClient != null)
+                    closeableHttpClient.close();
             } catch (IOException e) {
                 e.printStackTrace();
                 logger.error(

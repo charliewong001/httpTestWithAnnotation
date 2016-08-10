@@ -9,25 +9,18 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLContexts;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
-@SuppressWarnings("deprecation")
 public class SSLClientWithoutCerFactory {
-	/**
-	 * 绕过所有证书验证的client
-	 * @return
-	 * @throws NoSuchAlgorithmException
-	 * @throws KeyManagementException
-	 */
+    /**
+     * 绕过所有证书验证的client
+     * 
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
+     */
     public static CloseableHttpClient getTrustallClient()
             throws NoSuchAlgorithmException, KeyManagementException {
         SSLContext ctx = SSLContext.getInstance("TLS");
@@ -56,16 +49,15 @@ public class SSLClientWithoutCerFactory {
 
         return client;
     }
-    
+
     /**
      * 
      * @return
      */
-    public static CloseableHttpClient getTrustselfClient(){
-    	 CloseableHttpClient client = null;
-    	 
-    	 return client;
+    public static CloseableHttpClient getTrustselfClient() {
+        CloseableHttpClient client = null;
+
+        return client;
     }
 
 }
-
